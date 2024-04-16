@@ -1,41 +1,51 @@
 using NguyenSpace;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Character : Singleton<Character> 
 {
     //keo tha color data vao
     [SerializeField] ColorData colorData;
-    public ColorType color;
+    public ColorType colortype;
 
     //keo mesh renderer vao
     [SerializeField] Renderer meshRenderer;
     private string currentAnimNumber;
-
     [SerializeField] private Animator anim;
-
+    [SerializeField] public Rigidbody rb;
+    //Addbrick
+    [SerializeField] public Transform brickParent;
+    public List<Brick> bricks = new List<Brick>();
+    [SerializeField] private Brick brickPrefab;
+    public int count;
+    //CheckMove tren cau
+    public float lastZPosition;
+    public NavMeshAgent agent;
+    float currentZPosition;
     private IState<Character> currentState;
 
     private void Start()
     {
-        ChangeState(new IdleState());
+        OnInit();
     }
 
+    public virtual void OnInit()
+    {
+        ChangeColor(colortype);
+        count = 0;
+        ChangeState(new IdleState());
+
+    }
     // Update is called once per frame
-    void Update()
+    public void FixedUpdate()
     {
         if (currentState != null)
         {
             currentState.OnExecute(this);
         }
-    }
-
-    //thay doi mau object
-    public void ChangeColor(ColorType colorType)
-    {
-        color = colorType;
-        meshRenderer.material = colorData.GetMat(colorType);
     }
 
     public void ChangeState(IState<Character> state)
@@ -52,6 +62,14 @@ public class Character : Singleton<Character>
             currentState.OnEnter(this);
         }
     }
+    //-----------------------------------------------------------
+
+    //thay doi mau object
+    public void ChangeColor(ColorType clt)
+    {
+        colortype = clt;
+        meshRenderer.material = colorData.GetMat(clt);
+    }
     public void ChangeAnim(string animName)
     {
         if (currentAnimNumber != animName)
@@ -60,5 +78,42 @@ public class Character : Singleton<Character>
             currentAnimNumber = animName;
         }
     }
+    public void SetUnBrickColor(ColorType color)
+    {
 
+    }
+
+    public virtual void AddBrick()
+    {
+        count++;
+        Vector3 brickPosition = brickParent.position + new Vector3(0f,0.3f * count, 0f);
+        Vector3 brickRotation = brickParent.rotation.eulerAngles;
+        Brick newBrick = Instantiate(brickPrefab, brickPosition, Quaternion.Euler(brickRotation), brickParent);
+
+        //newbrick thua ke gameunit cua pool, gameunit changecolor cua brick
+        //brick chi dung de tuong tac va respawn
+        newBrick.ChangeColor(colortype);
+        bricks.Add(newBrick);
+    }
+
+    public virtual void RemoveBrick()
+    {
+        if (bricks.Count > 0 && count > 0)
+        {
+            count--;
+            Brick lastBrick = bricks[bricks.Count - 1];
+            //
+            Destroy(lastBrick.gameObject);
+            bricks.RemoveAt(bricks.Count - 1);
+
+            //brickParent.position += -Vector3.up * 0.3f;
+            //Debug.Log(bricks.Count);
+        }
+        //else
+        //{
+        //    LevelManager.instance.RestartLevel();
+        //    OnInit();
+        //    MovementManager.instance.OnInit();
+        //}
+    }
 }

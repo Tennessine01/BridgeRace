@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MianMenu : UICanvas
+public class ManiMenu : UICanvas
 {
     public void PlayButton()
     {

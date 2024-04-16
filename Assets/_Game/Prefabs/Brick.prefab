@@ -19,7 +19,7 @@ GameObject:
   m_TagString: Brick
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 40
   m_IsActive: 1
 --- !u!4 &4759949103923896732
 Transform:
@@ -64,7 +64,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 0d58984c104453f4d873dad97c188c01, type: 2}
+  - {fileID: 2100000, guid: 9c72eda69a4200c40bd2061aab1e7ef2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -148,6 +148,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   brickRenderer: {fileID: 6759192548702765240}
   colorData: {fileID: 11400000, guid: 0969c78f2254f0744bdcece3444aff86, type: 2}
-  color: 0
+  color: 4
   brick: {fileID: 5198011630681978380}
   isActive: 1
