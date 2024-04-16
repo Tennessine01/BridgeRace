@@ -6,6 +6,11 @@ TagManager:
   tags:
   - Brick
   - UnBrick
+  - Enemy
+  - FirstDoor
+  - LastDoor
+  - EnterDoor
+  - ExitDoor
   layers:
   - Default
   - TransparentFX
@@ -14,10 +19,10 @@ TagManager:
   - Water
   - UI
   - Brick
-  - 
-  - 
-  - 
-  - 
+  - Player
+  - Enemy
+  - Door
+  - Brick_Bridge
   - 
   - 
   - 
