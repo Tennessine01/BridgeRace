@@ -10,6 +10,7 @@ public class Brick : MonoBehaviour
     //keo tha color data vao
     [SerializeField] Renderer brickRenderer;
     [SerializeField] ColorData colorData;
+    [SerializeField] Platform_manager mapManager;
     public ColorType color;
 
     [SerializeField] private GameObject brick;
@@ -36,8 +37,16 @@ public class Brick : MonoBehaviour
     {
         isActive = true;
         brick.SetActive(true);
-        //ChangeColor((ColorType) (int) Mathf.Round(Random.Range(0.6f,4.5f)));
-        //Debug.Log(color);
+        
+    }
+    
+    private void ActiveBrick()
+    {
+        if (!isActive)
+        {
+            brick.SetActive(true);
+            isActive = true;
+        }
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -47,8 +56,10 @@ public class Brick : MonoBehaviour
             isActive = false;
             brick.SetActive(false);
             character.AddBrick();
-            MapManager.Ins.listbrick.Remove(this);
+            //Platform_manager.Ins.mapListBricks.Remove(this);
             // BrickManager.instance.AddBrick();
+            Invoke(nameof(ActiveBrick), 10f);
+
         }
     }
 

@@ -16,6 +16,7 @@ public class Player : Character
 
     [SerializeField] private Renderer render;
     [SerializeField] private Transform skintransform;
+    [SerializeField] private GameObject brick_Bridge;
 
     private bool canMoveUp = true;
     
@@ -31,19 +32,21 @@ public class Player : Character
             Debug.Log(canMoveUp + "---");
             if (!canMoveUp && movementDirection.z > 0)
             {
-                movementDirection.z = Mathf.Min(0, movementDirection.z); 
+                movementDirection.z = Mathf.Min(0, movementDirection.z);
             }
-            transform.position += movementDirection * Time.deltaTime * moveSpeed;
+            //transform.position += movementDirection * Time.deltaTime * moveSpeed;
+            rb.velocity = movementDirection * 5 + rb.velocity.y*Vector3.up ;
+            //float targetAngle = Mathf.Atan2(joystick.Horizontal, joystick.Vertical) * Mathf.Rad2Deg + 90f;
+            //Quaternion targetRotation = Quaternion.Euler(0, targetAngle, 0);
 
-            float targetAngle = Mathf.Atan2(joystick.Horizontal, joystick.Vertical) * Mathf.Rad2Deg + 90f;
-            Quaternion targetRotation = Quaternion.Euler(0, targetAngle, 0);
-
-            transform.right = targetRotation * Vector3.forward;
+            //transform.right = targetRotation * Vector3.forward;
+            transform.forward = movementDirection;
 
             ChangeAnim("Running");
         }
         else
         {
+            rb.velocity = Vector3.zero;
             ChangeAnim("Idle");
         }
     }
@@ -51,10 +54,17 @@ public class Player : Character
 
     private void OnTriggerEnter(Collider other)
     {
-        Brick brick_bridge = other.GetComponent<Brick>();
-        if (other.CompareTag("UnBrick") && bricks.Count == 0 )
+        Brick_Bridge brick_bridge = other.GetComponent<Brick_Bridge>();
+        if (other.CompareTag("UnBrick") && charListBricks.Count == 0 )
         {
-            canMoveUp = false;
+            if(colortype != brick_bridge.colorBrick)
+            {
+                canMoveUp = false;
+            }
+            else
+            {
+                canMoveUp = true;
+            }
         }
     }
 
@@ -69,15 +79,15 @@ public class Player : Character
 
     //public void RemoveBrick()
     //{
-    //    if (bricks.Count > 0 && count > 0)
+    //    if (charListBricks.Count > 0 && count > 0)
     //    {
     //        count--;
-    //        GameObject lastBrick = bricks[bricks.Count - 1];
-    //        bricks.RemoveAt(bricks.Count - 1);
+    //        GameObject lastBrick = charListBricks[charListBricks.Count - 1];
+    //        charListBricks.RemoveAt(charListBricks.Count - 1);
     //        Destroy(lastBrick);
 
     //        character.position += -Vector3.up * 0.35f;
-    //        //Debug.Log(bricks.Count);
+    //        //Debug.Log(charListBricks.Count);
     //    }
     //    else
     //    {
@@ -89,13 +99,13 @@ public class Player : Character
 
     //public void ClearBrick()
     //{
-    //    foreach (var brick in bricks)
+    //    foreach (var brick in charListBricks)
     //    {
     //        Destroy(brick);
     //    }
-    //    bricks.Clear();
+    //    charListBricks.Clear();
 
-    //    //Debug.Log(bricks.Count + "---");
+    //    //Debug.Log(charListBricks.Count + "---");
 
     //    count = 0;
 

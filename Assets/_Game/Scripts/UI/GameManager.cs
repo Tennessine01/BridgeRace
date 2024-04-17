@@ -30,7 +30,7 @@ public class GameManager : Singleton<GameManager>
 
         //ChangeState(GameState.MainMenu);
 
-        UIManager.Ins.OpenUI<ManiMenu>();
+        UIManager.Ins.OpenUI<Menu>();
     }
 
     //public static void ChangeState(GameState state)

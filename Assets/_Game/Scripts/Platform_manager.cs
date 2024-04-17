@@ -2,17 +2,17 @@ using NguyenSpace;
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
 
-public class MapManager : Singleton<MapManager>
+public class Platform_manager : Singleton<Platform_manager>  
 {
     //[SerializeField] ColorData colorData;
     //[SerializeField] Renderer brickRenderer;
-    public List<Brick> listbrick = new List<Brick>();
+    public List<Brick> mapListBricks = new List<Brick>();
 
-    public NavMeshSurface navMesh;
     public Brick brickPrefab;
     //public GameObject character;
     public int width = 5;
@@ -33,7 +33,11 @@ public class MapManager : Singleton<MapManager>
     {
         GenerateGrid();
     }
-
+    public void Update()
+    {
+        
+    }
+    
     public void GenerateGrid()
     {
         //calculate center of grid
@@ -75,7 +79,7 @@ public class MapManager : Singleton<MapManager>
 
         newBrick.ChangeColor(color);
         newBrick.transform.SetParent(platformPos);
-        listbrick.Add(newBrick);
+        mapListBricks.Add(newBrick);
     }
 
     public void Shuffle<T>(List<T> list)
@@ -94,15 +98,15 @@ public class MapManager : Singleton<MapManager>
         targetBrick = null;
         minDistance = 1000f;
 
-        for (int i = 0; i < listbrick.Count; i++)
+        for (int i = 0; i < mapListBricks.Count; i++)
         {
-            if (listbrick[i].color == colortype && listbrick[i].isActive)
+            if (mapListBricks[i].color == colortype && mapListBricks[i].isActive)
             {
-                float currentDistance = Vector3.Distance(transform.position, listbrick[i].transform.position);
+                float currentDistance = Vector3.Distance(transform.position, mapListBricks[i].transform.position);
                 if (currentDistance < minDistance)
                 {
                     minDistance = currentDistance;
-                    targetBrick = listbrick[i];
+                    targetBrick = mapListBricks[i];
                 }
             }
         }
@@ -118,5 +122,18 @@ public class MapManager : Singleton<MapManager>
 
         }
         return currentBrickPosition;
+    }
+    public void MoveBrickToNextMapByColor(ColorType colortype, int currentMap)
+    {
+        Vector3 prevPos = new Vector3(0, 5.9f, 22.3f) * (currentMap - 1);
+        Vector3 newPos = new Vector3(0, 5.9f, 22.3f) * (currentMap);
+
+        foreach (Brick brick in mapListBricks)
+        {
+            if (brick.color == colortype)
+            {
+                brick.transform.position += - prevPos + newPos;
+            }
+        }
     }
 }

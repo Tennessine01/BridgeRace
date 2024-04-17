@@ -18,7 +18,7 @@ public class Character : Singleton<Character>
     [SerializeField] public Rigidbody rb;
     //Addbrick
     [SerializeField] public Transform brickParent;
-    public List<Brick> bricks = new List<Brick>();
+    public List<Brick> charListBricks = new List<Brick>();
     [SerializeField] private Brick brickPrefab;
     public int count;
     //CheckMove tren cau
@@ -26,7 +26,7 @@ public class Character : Singleton<Character>
     public NavMeshAgent agent;
     float currentZPosition;
     private IState<Character> currentState;
-
+    public int currentMap = 1;
     private void Start()
     {
         OnInit();
@@ -78,10 +78,6 @@ public class Character : Singleton<Character>
             currentAnimNumber = animName;
         }
     }
-    public void SetUnBrickColor(ColorType color)
-    {
-
-    }
 
     public virtual void AddBrick()
     {
@@ -93,21 +89,21 @@ public class Character : Singleton<Character>
         //newbrick thua ke gameunit cua pool, gameunit changecolor cua brick
         //brick chi dung de tuong tac va respawn
         newBrick.ChangeColor(colortype);
-        bricks.Add(newBrick);
+        charListBricks.Add(newBrick);
     }
 
     public virtual void RemoveBrick()
     {
-        if (bricks.Count > 0 && count > 0)
+        if (charListBricks.Count > 0 && count > 0)
         {
             count--;
-            Brick lastBrick = bricks[bricks.Count - 1];
+            Brick lastBrick = charListBricks[charListBricks.Count - 1];
             //
             Destroy(lastBrick.gameObject);
-            bricks.RemoveAt(bricks.Count - 1);
+            charListBricks.RemoveAt(charListBricks.Count - 1);
 
             //brickParent.position += -Vector3.up * 0.3f;
-            //Debug.Log(bricks.Count);
+            //Debug.Log(charListBricks.Count);
         }
         //else
         //{

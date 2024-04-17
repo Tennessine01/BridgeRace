@@ -10,9 +10,9 @@ public class Brick_Bridge : MonoBehaviour
     //keo tha color data vao
     [SerializeField] Renderer brickRenderer;
     [SerializeField] ColorData colorData;
-    public ColorType color;
+    public ColorType colorBrick;
 
-    [SerializeField] private GameObject brick_bridge;
+    [SerializeField] private GameObject unBrick;
     [SerializeField] private Collider col;
     public bool isActive = false;
     private Renderer render;
@@ -35,7 +35,7 @@ public class Brick_Bridge : MonoBehaviour
     private void OnInit()
     {
         isActive = false;
-        brick_bridge.SetActive(false);
+        unBrick.SetActive(false);
         //ChangeColor((ColorType) (int) Mathf.Round(Random.Range(0.6f,4.5f)));
         //Debug.Log(color);
     }
@@ -44,22 +44,42 @@ public class Brick_Bridge : MonoBehaviour
         Character character = other.GetComponent<Character>();
         if (other.gameObject.layer == LayerMask.NameToLayer("Player") || other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
         {
-            if (brick_bridge != isActive && (character.bricks.Count) > 0)
+            if ((character.charListBricks.Count) > 0)
             {
-                isActive = true;
-                brick_bridge.SetActive(true);
-                // BrickManager.instance.AddBrick();
-                SetColor(character.colortype);
+                if (unBrick != isActive )
+                {
+                    isActive = true;
+                    unBrick.SetActive(true);
+                    SetColor(character.colortype);
+                    character.RemoveBrick(); 
+                }
+                else if (character.colortype != colorBrick)
+                {
+                    SetColor(character.colortype);
+                    character.RemoveBrick();
+                }
+                else
+                {
 
-                character.RemoveBrick();
-
+                }
             }
         }
     }
+    //private void OnTriggerExit(Collider other)
+    //{
+    //    Character character = other.GetComponent<Character>();
+    //    if (other.gameObject.layer == LayerMask.NameToLayer("Player") || other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+    //    {
+    //        if(unBrick == isActive && (character.charListBricks.Count) > 0)
+    //        {
+    //            character.RemoveBrick();
+    //        }
+    //    }
+    //}
 
-    public void SetColor(ColorType color)
+    public void SetColor(ColorType colortype)
     {
-        brickRenderer.material = colorData.GetMat(color);
-
+        colorBrick = colortype;
+        brickRenderer.material = colorData.GetMat(colortype);
     }
 }

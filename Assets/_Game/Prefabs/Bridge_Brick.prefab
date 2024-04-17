@@ -54,8 +54,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.99999976, y: 5, z: 0.055004112}
-  m_Center: {x: 0, y: 1.5, z: 0.13527617}
+  m_Size: {x: 0.99999976, y: 5, z: 0.07307466}
+  m_Center: {x: 0, y: 1.5, z: -0.3854801}
 --- !u!114 &514768114664213549
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -70,8 +70,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   brickRenderer: {fileID: 567579929629375687}
   colorData: {fileID: 11400000, guid: 0969c78f2254f0744bdcece3444aff86, type: 2}
-  color: 2
-  brick_bridge: {fileID: 8587575688328449664}
+  colorBrick: 0
+  unBrick: {fileID: 8587575688328449664}
   col: {fileID: 4197294973990727535}
   isActive: 0
 --- !u!54 &3138580671535153015
@@ -162,7 +162,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 9d18ff2e5ba7d4e4997190f7aaae4c83, type: 2}
+  - {fileID: 2100000, guid: 9c72eda69a4200c40bd2061aab1e7ef2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

@@ -9,29 +9,25 @@ public class Enemy : Character
 {
     //Brick targetBrick = null;
     //private float minDistance = 100f;
+    [SerializeField] public Transform winPos;
     private Vector3 brickPosition;
     public bool isMoving = false;
-
-    public void OnInit()
-    {
-        ChangeColor(colortype);
-    }
-
     
     public void GetDestination(ColorType color)
     {
-        brickPosition = MapManager.Ins.DetectBrick(color);
+        brickPosition = Platform_manager.Ins.DetectBrick(color);
     }
     public void MoveToBrick()
     {
         if (brickPosition != null)
         {
             agent.SetDestination(brickPosition);
-            if (Vector3.Distance(transform.position, brickPosition + (transform.position.y - brickPosition.y) * Vector3.up) < 0.1f)
-            {
-                Debug.Log("stoppppp");
-                isMoving = false;
-            }
+            //if (Vector3.Distance(transform.position, brickPosition + (transform.position.y - brickPosition.y) * Vector3.up) < 0.1f)
+            //{
+            //    //Debug.Log("stoppppp");
+            //    isMoving = false;
+            //}
+            CheckMoving();
         }
     }
 
@@ -45,5 +41,10 @@ public class Enemy : Character
         {
             isMoving = false;
         }
+    }
+
+    public void MoveToWinPos()
+    {
+        agent.SetDestination(winPos.transform.position);
     }
 }

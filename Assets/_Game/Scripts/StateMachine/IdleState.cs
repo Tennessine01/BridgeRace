@@ -9,7 +9,6 @@ public class IdleState : IState<Character>
         t.ChangeAnim("Idle");
         if (t is Enemy enemy)
         {
-            enemy.OnInit();
             enemy.GetDestination(enemy.colortype);
             //Debug.Log("idle state----");
         }
