@@ -30,6 +30,7 @@ public class GameManager : Singleton<GameManager>
 
         //ChangeState(GameState.MainMenu);
 
+        UICanvas.Ins.Pause();
         UIManager.Ins.OpenUI<Menu>();
     }
 

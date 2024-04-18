@@ -6,11 +6,12 @@ public class IdleState : IState<Character>
 {
     public void OnEnter(Character t)
     {
+        //Debug.Log("aaaaaa");
         t.ChangeAnim("Idle");
         if (t is Enemy enemy)
         {
             enemy.GetDestination(enemy.colortype);
-            //Debug.Log("idle state----");
+            Debug.Log(" idle state----0------");
         }
     }
 
@@ -19,7 +20,7 @@ public class IdleState : IState<Character>
         if(t is Enemy enemy)
         {
             enemy.CheckMoving();
-            //Debug.Log(enemy.isMoving + "-------------");
+            //Debug.Log( "-------------");
 
             if (enemy.isMoving == true)
             {

@@ -42,7 +42,7 @@ public class Brick_Bridge : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         Character character = other.GetComponent<Character>();
-        if (other.gameObject.layer == LayerMask.NameToLayer("Player") || other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+        if (other.gameObject.layer == LayerMask.NameToLayer("Player") || other.gameObject.layer == LayerMask.NameToLayer("currentEnemy"))
         {
             if ((character.charListBricks.Count) > 0)
             {
@@ -68,7 +68,7 @@ public class Brick_Bridge : MonoBehaviour
     //private void OnTriggerExit(Collider other)
     //{
     //    Character character = other.GetComponent<Character>();
-    //    if (other.gameObject.layer == LayerMask.NameToLayer("Player") || other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+    //    if (other.gameObject.layer == LayerMask.NameToLayer("Player") || other.gameObject.layer == LayerMask.NameToLayer("currentEnemy"))
     //    {
     //        if(unBrick == isActive && (character.charListBricks.Count) > 0)
     //        {

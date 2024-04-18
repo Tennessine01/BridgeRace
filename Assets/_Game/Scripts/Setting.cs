@@ -6,6 +6,7 @@ public class Setting : UICanvas
 {
     public void ContinueButton()
     {
+        Resume();
         Close(0);
     }
 }

@@ -9,7 +9,7 @@ public class Enemy : Character
 {
     //Brick targetBrick = null;
     //private float minDistance = 100f;
-    [SerializeField] public Transform winPos;
+    public Transform winPos;
     private Vector3 brickPosition;
     public bool isMoving = false;
     

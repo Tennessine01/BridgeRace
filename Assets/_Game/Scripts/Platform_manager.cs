@@ -15,27 +15,24 @@ public class Platform_manager : Singleton<Platform_manager>
 
     public Brick brickPrefab;
     //public GameObject character;
-    public int width = 5;
-    public int height = 5;
-    public float brickSpacing = 1f;
+    public int width;
+    public int height;
+    public float brickSpacing;
     [SerializeField] public Transform platformPos;
-
     Brick targetBrick;
-    private float minDistance = 1000f;
+    private float minDistance;
     private Vector3 currentBrickPosition;
     //private Dictionary<ColorType, int> colorCounts = new Dictionary<ColorType, int>();
 
-    private void Start()
-    {
-        OnInit();
-    }
+    
+    
     public void OnInit()
     {
+        width = 6;
+        height = 6;
+        brickSpacing = 1f;
+        minDistance = 1000f;
         GenerateGrid();
-    }
-    public void Update()
-    {
-        
     }
     
     public void GenerateGrid()
@@ -135,5 +132,9 @@ public class Platform_manager : Singleton<Platform_manager>
                 brick.transform.position += - prevPos + newPos;
             }
         }
+    }
+    public void OnDespawn()
+    {
+        mapListBricks.Clear();
     }
 }

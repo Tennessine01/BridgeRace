@@ -20,27 +20,31 @@ public class Player : Character
 
     private bool canMoveUp = true;
     
-    public void Update()
+    public override void Update()
     {
         JoystickMove();
     }
     private void JoystickMove()
     {
         Vector3 movementDirection = new Vector3(joystick.Horizontal, 0, joystick.Vertical);
+        //Debug.Log(joystick.Horizontal +"------");
         if (movementDirection.magnitude > 0)
         {
-            Debug.Log(canMoveUp + "---");
+            //Debug.Log(canMoveUp + "---");
             if (!canMoveUp && movementDirection.z > 0)
             {
                 movementDirection.z = Mathf.Min(0, movementDirection.z);
             }
             //transform.position += movementDirection * Time.deltaTime * moveSpeed;
             rb.velocity = movementDirection * 5 + rb.velocity.y*Vector3.up ;
-            //float targetAngle = Mathf.Atan2(joystick.Horizontal, joystick.Vertical) * Mathf.Rad2Deg + 90f;
-            //Quaternion targetRotation = Quaternion.Euler(0, targetAngle, 0);
 
-            //transform.right = targetRotation * Vector3.forward;
-            transform.forward = movementDirection;
+
+            float targetAngle = Mathf.Atan2(joystick.Horizontal, joystick.Vertical) * Mathf.Rad2Deg + 90f;
+            Quaternion targetRotation = Quaternion.Euler(0, targetAngle, 0);
+
+            transform.right = targetRotation * Vector3.forward;
+
+            //transform.forward = movementDirection;
 
             ChangeAnim("Running");
         }
@@ -75,41 +79,4 @@ public class Player : Character
             canMoveUp = true; 
         }
     }
-
-
-    //public void RemoveBrick()
-    //{
-    //    if (charListBricks.Count > 0 && count > 0)
-    //    {
-    //        count--;
-    //        GameObject lastBrick = charListBricks[charListBricks.Count - 1];
-    //        charListBricks.RemoveAt(charListBricks.Count - 1);
-    //        Destroy(lastBrick);
-
-    //        character.position += -Vector3.up * 0.35f;
-    //        //Debug.Log(charListBricks.Count);
-    //    }
-    //    else
-    //    {
-    //        LevelManager.instance.RestartLevel();
-    //        OnInit();
-    //        MovementManager.instance.OnInit();
-    //    }
-    //}
-
-    //public void ClearBrick()
-    //{
-    //    foreach (var brick in charListBricks)
-    //    {
-    //        Destroy(brick);
-    //    }
-    //    charListBricks.Clear();
-
-    //    //Debug.Log(charListBricks.Count + "---");
-
-    //    count = 0;
-
-    //    character.position = transform.position;
-    //    //character.position = MovementManager.Instance.EndPosition() - new Vector3(0,0,-2.5f);
-    //}
 }

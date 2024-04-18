@@ -4,8 +4,9 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.TextCore.Text;
 
-public class Character : Singleton<Character> 
+public class Character : MonoBehaviour
 {
     //keo tha color data vao
     [SerializeField] ColorData colorData;
@@ -13,8 +14,10 @@ public class Character : Singleton<Character>
 
     //keo mesh renderer vao
     [SerializeField] Renderer meshRenderer;
+    //Anim
+    [SerializeField] private Animator animm;
     private string currentAnimNumber;
-    [SerializeField] private Animator anim;
+    //Rigidbidy
     [SerializeField] public Rigidbody rb;
     //Addbrick
     [SerializeField] public Transform brickParent;
@@ -22,32 +25,38 @@ public class Character : Singleton<Character>
     [SerializeField] private Brick brickPrefab;
     public int count;
     //CheckMove tren cau
-    public float lastZPosition;
     public NavMeshAgent agent;
-    float currentZPosition;
-    private IState<Character> currentState;
     public int currentMap = 1;
-    private void Start()
-    {
-        OnInit();
-    }
 
-    public virtual void OnInit()
-    {
+    private IState<Character> currentState;
+
+    //public void Start()
+    //{
+    //    OnInit();
+    //}
+
+    public void OnInit()
+    {    
+
         ChangeColor(colortype);
         count = 0;
+        charListBricks.Clear();
+        ClearBrick();
         ChangeState(new IdleState());
-
     }
     // Update is called once per frame
-    public void FixedUpdate()
+    public virtual void Update()
     {
+
+        //Debug.Log(currentState != null);
+
         if (currentState != null)
         {
+            //Debug.Log("------" + currentState != null + gameObject.name + "-----");
+
             currentState.OnExecute(this);
         }
     }
-
     public void ChangeState(IState<Character> state)
     {
         if (currentState != null)
@@ -57,11 +66,16 @@ public class Character : Singleton<Character>
 
         currentState = state;
 
+        //Debug.LogError(currentState);
+        //Debug.LogError(currentState != null);
+
         if (currentState != null)
         {
             currentState.OnEnter(this);
         }
     }
+
+
     //-----------------------------------------------------------
 
     //thay doi mau object
@@ -74,7 +88,7 @@ public class Character : Singleton<Character>
     {
         if (currentAnimNumber != animName)
         {
-            anim.SetTrigger(animName);
+            animm.SetTrigger(animName);
             currentAnimNumber = animName;
         }
     }
@@ -111,5 +125,19 @@ public class Character : Singleton<Character>
         //    OnInit();
         //    MovementManager.instance.OnInit();
         //}
+    }
+
+    public void ClearBrick()
+    {
+        foreach (var brick in charListBricks)
+        {
+            Destroy(brick);
+        }
+        charListBricks.Clear();
+
+        count = 0;
+
+        //character.position = transform.position;
+        //character.position = MovementManager.Instance.EndPosition() - new Vector3(0,0,-2.5f);
     }
 }

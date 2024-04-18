@@ -7,10 +7,7 @@ TagManager:
   - Brick
   - UnBrick
   - Enemy
-  - FirstDoor
-  - LastDoor
-  - EnterDoor
-  - ExitDoor
+  - Door
   layers:
   - Default
   - TransparentFX

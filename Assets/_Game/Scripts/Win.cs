@@ -9,6 +9,7 @@ public class Win : UICanvas
 
     public void MainMenuButton()
     {
+        LevelManager.Ins.OnDespawn();
         UIManager.Ins.OpenUI<Menu>();
         Close(0);
     }

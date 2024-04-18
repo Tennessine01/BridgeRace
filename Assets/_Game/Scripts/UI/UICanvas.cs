@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UICanvas : MonoBehaviour
+public class UICanvas : Singleton<UICanvas>
 {
     //public bool IsAvoidBackKey = false;
     public bool IsDestroyOnClose = false;
@@ -57,6 +57,7 @@ public class UICanvas : MonoBehaviour
     //mo canvas
     public virtual void Open()
     {
+        //Time.timeScale = 0f;
         gameObject.SetActive(true);
     }
 
@@ -80,4 +81,13 @@ public class UICanvas : MonoBehaviour
         Invoke(nameof(CloseDirectly), delayTime);
     }
 
+    public void Pause()
+    {
+        Time.timeScale = 0f;
+    }
+
+    public void Resume()
+    {
+        Time.timeScale = 1f;
+    }
 }
